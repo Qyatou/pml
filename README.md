@@ -98,36 +98,3 @@ conclusion
  B  A  B  A  A  E  D  B  A  A  B  C  B  A  E  E  A  B  B  B 
 Levels: A B C D E
 Inserting this data in the Quiz, it provides a 100% scoring
-
-
-
-
-
->counts <- colSums(is.na(train))
->training <- train[counts == 0]
-> dim(training)
-[1] 19622    60
-Remove extraneous variables which are unrelated to dependent variable.
-> trainset<- training[c(-1, -3, -4, -5, -6)]
-> dim(trainset)
-[1] 19622    55
-
-> countstest <- colSums(is.na(test))
-> table(countstest)
-countstest
-  0  20 
- 60 100 
-> testing<- test[countstest == 0]
-> dim(testing)
-[1] 20 60
-> testset<- testing[c(-1, -3, -4, -5, -6)]
-> dim(testset)
-[1] 20 55
-
-Explore and Preprocess Data
-
-> table(train$user_name)
-
-  adelmo carlitos  charles   eurico   jeremy    pedro 
-    3892     3112     3536     3070     3402     2610 
-
