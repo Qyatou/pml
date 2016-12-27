@@ -1,25 +1,28 @@
-# pml
-Prediction Assignment Writeup
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, comment = NA)
+```
+#Prediction Assignment Writeup
 
-libraries
-
+##libraries
+```{r echo=FALSE, warning=F}
+setwd("~/Downloads/DataScience/Course-8/Assignment")
 library("caret")
 library("rpart")
 library("tree")
 library(“randomForest”)
-
-Load Data
-
+```
+##Load Data
+```{r cache=T}
 > train<- read.csv("E://pml-training.csv",na.strings=c("NA","","#DIV/0!"))
 > dim(train)
 [1] 19622   160     
 > test<- read.csv("E://pml-testing.csv",na.strings=c("NA","","#DIV/0!"))
 > dim(test)
 [1]  20 160
-
-Tidy the Data
-
+```
+##Tidy the Data
 Remove variables which have an excess number of NA values.
+```{r}
 > nacounts <- colSums(is.na(train))
 > table(nacounts)
 nacounts
@@ -63,9 +66,9 @@ All correlations <= 0.9
 > training_corr<-train_nzv[,-remove_corr]
 > dim(training_corr)
 [1] 19622    46
-
-Cross Validation
-
+```
+##Cross Validation
+```{r}
 > training_dataPart <- createDataPartition(y=training_corr$classe, p=0.7, list=FALSE)
 > training <- training_corr[training_dataPart,]; testing <- training_corr[-training_dataPart,]
 > dim(training)
@@ -99,12 +102,13 @@ E    0    0    1    6 2518 0.002772277
 > pred_matrix = with(testing,table(tree_predict,classe))
 > sum(diag(pred_matrix))/sum(as.vector(pred_matrix))
 [1] 0.9937128
-
-conclusion
-
+```
+##conclusion
+````{r cache = TRUE}
 > predict <- predict(training_ranForest, test)
 > predict 
  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 
  B  A  B  A  A  E  D  B  A  A  B  C  B  A  E  E  A  B  B  B 
 Levels: A B C D E
+```
 Inserting this data in the Quiz, it provides a 100% scoring
