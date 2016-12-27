@@ -20,6 +20,16 @@ Load Data
 Tidy the Data
 
 Remove variables which have an excess number of NA values.
+> nacounts <- colSums(is.na(train))
+> table(nacounts)
+nacounts
+    0 19216 19217 19218 19220 19221 19225 19226 19227 19248 19293 19294 
+   60    67     1     1     1     4     1     4     2     2     1     1 
+19296 19299 19300 19301 19622 
+    2     1     4     2     6 
+> training<- train[nacounts == 0]
+> dim(training)
+[1] 19622    60
 > extraneous = c('X', 'user_name', 'raw_timestamp_part_1', 'raw_timestamp_part_2', 'cvtd_timestamp', 'new_window', 'num_window')
 > training_ext <- training[, -which(names(training) %in% extraneous)]
 > dim(training_ext)
@@ -50,7 +60,7 @@ Compare row 46  and column  31 with corr  0.914
 Compare row 46  and column  33 with corr  0.933 
   Means:  0.083 vs 0.164 so flagging column 33 
 All correlations <= 0.9 
-> training_corr<-training_nzv[,-remove_corr]
+> training_corr<-train_nzv[,-remove_corr]
 > dim(training_corr)
 [1] 19622    46
 
